@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connexion</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="index.html">Accueil</a></li>
+                <li><a href="information.html">Information</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section id="connexion">
+            <h1>Connexion</h1>
+            <form id="connexion-form">
+                <label for="email">Adresse email:</label>
+                <input type="email" id="email" name="email" required>
+                <label for="password">Mot de passe:</label>
+                <input type="password" id="password" name="password" required>
+                <button type="submit">Se connecter</button>
+                <p id="error-message" style="color: red; display: none;">Vous devez d'abord vous inscrire.</p>
+            </form>
+        </section>
+    </main>
+    <script>
+        document.getElementById('connexion-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const storedEmail = localStorage.getItem('email');
+            const storedPassword = localStorage.getItem('password');
+            if (email === storedEmail && password === storedPassword) {
+                // Connecter l'utilisateur
+                alert('Connexion réussie!');
+                window.location.href = 'index.html';
+            } else {
+                // Afficher un message d'erreur
+                document.getElementById('error-message').style.display = 'block';
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jeu de Devine le Nombre</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        h1 {
+            color: #333;
+        }
+        .input-group {
+            margin: 15px 0;
+        }
+        input[type="text"], input[type="number"] {
+            padding: 10px;
+            font-size: 18px;
+            width: 250px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 18px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        #message {
+            margin-top: 20px;
+            font-size: 20px;
+        }
+        #timer, #leaderboard {
+            margin-top: 10px;
+            font-size: 20px;
+        }
+        table {
+            margin-top: 20px;
+            border-collapse: collapse;
+            width: 80%;
+        }
+        th, td {
+            padding: 10px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <h1>Jeu de Devine le Nombre</h1>
+    <div class="input-group">
+        <input type="text" id="playerName" placeholder="Entrez votre nom" />
+    </div>
+    <div class="input-group">
+        <input type="number" id="guess" min="1" max="100" placeholder="Entrez votre devinette" />
+        <button onclick="guessNumber()">Deviner</button>
+    </div>
+    <p id="message"></p>
+    <p id="timer">Temps écoulé: 0 secondes</p>
+    <div id="leaderboard">
+        <h2>Classement</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Temps (s)</th>
+                    <th>Tentatives</th>
+                </tr>
+            </thead>
+            <tbody id="leaderboardBody">
+                <!-- Classement -->
+            </tbody>
+        </table>
+    </div>
+    <script src="scrip.js"></script>
+</body>
+</html>

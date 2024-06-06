@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Snake Game</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f3f3f3;
+    }
+    #container {
+      display: flex;
+      justify-content: flex-end;
+      align-items: flex-start;
+      height: 100vh;
+      padding: 20px;
+      position: relative;
+    }
+    #gameCanvas {
+      border: 2px solid #333;
+      background-color: #ffffff;
+      border-radius: 10px;
+    }
+    #score {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      font-size: 24px;
+      color: #555555;
+    }
+    #info {
+      margin-right: 20px;
+      text-align: right;
+    }
+    #leaderboard {
+      list-style-type: none;
+      padding: 0;
+    }
+    #startButton {
+      font-size: 16px;
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    #replayButton {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      font-size: 16px;
+      background-color: #f44336;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    input[type="text"] {
+      padding: 8px;
+      font-size: 16px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      width: 200px;
+    }
+  </style>
+</head>
+<body>
+  <div id="container">
+    <canvas id="gameCanvas" width="800" height="600"></canvas>
+    <p id="score">Score: 0</p>
+    <div id="info">
+      <label for="playerName" style="color: #555555;">Nom du joueur:</label>
+      <input type="text" id="playerName" name="playerName" maxlength="20">
+      <br><br>
+      <button id="startButton">Démarrer partie</button>
+      <br><br>
+      <p id="bestScore" style="color: #555555;">Meilleur score: 0</p>
+      <ol id="leaderboard"></ol>
+    </div>
+    <button id="replayButton" style="display: none;">Rejouer</button>
+  </div>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const canvas = document.getElementById('gameCanvas');
+      const ctx = canvas.getContext('2d');
+
+      const SCREEN_SIZE_X = 40; // In units of snake sections.
+      const SCREEN_SIZE_Y = 30;
+      const box = 20;
+      const gridSize = canvas.width / box;
+
+      let gameInterval;
+      let scores = JSON.parse(localStorage.getItem('scores')) || [];
+      let bestScore = localStorage.getItem('bestScore') || 0;
+      document.getElementById('bestScore').textContent = 'Meilleur score: ' + bestScore;
+
+      const snake = {
+        sections: [],
+        length: 5,
+        directionX: -1,
+        directionY: 0,
+        color: 'green',
+
+        create: function () {
+          for (let i = 0; i < this.length; i++) {
+            this.sections.push({ x: 10 + i, y: 10 });
+          }
+        },
+
+        move: function () {
+          const head = { x: this.sections[0].x + this.directionX, y: this.sections[0].y + this.directionY };
+          this.sections.unshift(head);
+          if (head.x === food.x && head.y === food.y) {
+            score++;
+            food = generateFood();
+          } else {
+            this.sections.pop();
+          }
+          // Check if snake hits the barrier
+          if (head.x < 0 || head.x >= SCREEN_SIZE_X || head.y < 0 || head.y >= SCREEN_SIZE_Y || snakeHitSelf(head)) {
+            endGame();
+          }
+        },
+
+        paint: function () {
+          ctx.fillStyle = this.color;
+          this.sections.forEach(part => {
+            ctx.fillRect(part.x * box, part.y * box, box, box);
+          });
+        }
+      };
+
+      function snakeHitSelf(head) {
+        return snake.sections.slice(1).some(section => section.x === head.x && section.y === head.y);
+      }
+
+      function generateFood() {
+        let newFood;
+        do {
+          newFood = { x: Math.floor(Math.random() * (SCREEN_SIZE_X - 1)), y: Math.floor(Math.random() * (SCREEN_SIZE_Y - 1)) };
+        } while (snake.sections.some(section => section.x === newFood.x && section.y === newFood.y));
+        return newFood;
+      }
+
+      let food = generateFood();
+      let score = 0;
+
+      snake.create();
+
+      function drawFood() {
+        ctx.fillStyle = 'red';
+        ctx.fillRect(food.x * box, food.y * box, box, box);
+      }
+
+      function drawScore() {
+        const scoreElement = document.getElementById('score');
+        scoreElement.textContent = 'Score: ' + score;
+      }
+
+      function updateLeaderboard() {
+        const leaderboard = document.getElementById('leaderboard');
+        leaderboard.innerHTML = '';
+        scores.slice(0, 5).forEach(item => {
+          const li = document.createElement('li');
+          li.textContent = item.playerName + ': ' + item.score;
+          leaderboard.appendChild(li);
+        });
+      }
+
+      updateLeaderboard();
+
+      function gameLoop() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        snake.move();
+        snake.paint();
+        drawFood();
+        drawScore();
+      }
+
+      function endGame() {
+        clearInterval(gameInterval);
+        const playerName = document.getElementById('playerName').value || 'Joueur';
+        scores.push({ playerName: playerName, score: score });
+        localStorage.setItem('scores', JSON.stringify(scores));
+        scores.sort((a, b) => b.score - a.score); // Sort scores in descending order
+        bestScore = scores.length > 0 ? scores[0].score : 0;
+        localStorage.setItem('bestScore', bestScore);
+        document.getElementById('bestScore').textContent = 'Meilleur score: ' + bestScore;
+        updateLeaderboard();
+        const replayButton = document.getElementById('replayButton');
+        if (!replayButton) {
+          const replayButton = document.createElement('button');
+          replayButton.textContent = 'Rejouer';
+          replayButton.addEventListener('click', startGame);
+          document.getElementById('container').appendChild(replayButton);
+        } 
+      }
+
+      function startGame() {
+        snake.sections = [];
+        snake.length = 5;
+        snake.directionX = -1;
+        snake.directionY = 0;
+        snake.create();
+        food = generateFood();
+        score = 0;
+        const replayButton = document.getElementById('replayButton');
+        if (replayButton) replayButton.style.display = 'none'; // Hide the replay button
+        gameInterval = setInterval(gameLoop, 150);
+      }
+
+      document.getElementById('startButton').addEventListener('click', startGame);
+
+      document.addEventListener('keydown', (event) => {
+        const key = event.key;
+        if (key === 'q' && snake.directionX !== 1) {
+          snake.directionX = -1;
+          snake.directionY = 0;
+        } else if (key === 'd' && snake.directionX !== -1) {
+          snake.directionX = 1;
+          snake.directionY = 0;
+        } else if (key === 'z' && snake.directionY !== 1) {
+          snake.directionX = 0;
+          snake.directionY = -1;
+        } else if (key === 's' && snake.directionY !== -1) {
+          snake.directionX = 0;
+          snake.directionY = 1;
+        }
+      });
+    });
+  </script>
+</body>
+</html>

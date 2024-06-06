@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Le Pendu</title>
+    <link rel="stylesheet" href="A.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Le Pendu</h1>
+        <div id="hangman">
+            <img src="hangman-0.png" alt="Pendu">
+        </div>
+        <div id="gameInfo">
+            <p id="wordToGuess"></p>
+            <p id="message"></p>
+            <p id="guessesLeft"></p>
+        </div>
+        <input type="text" id="guess" maxlength="1">
+        <button onclick="checkLetter()">Devine</button>
+    </div>
+
+    <script src="A.js"></script>
+</body>
+</html>

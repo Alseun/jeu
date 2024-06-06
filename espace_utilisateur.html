@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Espace Utilisateur</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="index.html">Accueil</a></li>
+                <li><a href="inscription.html">Inscription</a></li>
+                <li><a href="connexion.html">Connexion</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section id="espace_utilisateur">
+            <h2>Bienvenue dans votre espace</h2>
+            <p id="userEmail"></p>
+            <p id="userName"></p>
+        </section>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const email = localStorage.getItem('email');
+            const username = localStorage.getItem('username');
+            document.getElementById('userEmail').innerText = 'Adresse e-mail: ' + email;
+            document.getElementById('userName').innerText = 'Nom d\'utilisateur: ' + username;
+        });
+    </script>
+</body>
+</html>

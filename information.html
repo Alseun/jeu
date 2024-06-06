@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Information</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="index.html">Accueil</a></li>
+                <li><a href="connexion.html">Connexion</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section id="information">
+            <h1>Informations Utilisateur</h1>
+            <div id="user-info">
+                <p>Nom d'utilisateur: <span id="stored-username"></span></p>
+                <p>Mot de passe: <span id="stored-password"></span></p>
+                <p>Adresse email: <span id="stored-email"></span></p>
+            </div>
+            <div id="time-spent">
+                <p>Temps passé sur le site: <span id="time-counter">0 secondes</span></p>
+            </div>
+        </section>
+    </main>
+    <script>
+        // Récupération des données utilisateur depuis le stockage local
+        const storedUsername = localStorage.getItem('username');
+        const storedPassword = localStorage.getItem('password');
+        const storedEmail = localStorage.getItem('email');
+
+        // Affichage des informations utilisateur
+        document.getElementById('stored-username').textContent = storedUsername;
+        document.getElementById('stored-password').textContent = storedPassword;
+        document.getElementById('stored-email').textContent = storedEmail;
+
+        // Temps passé sur le site
+        let seconds = 0;
+        setInterval(function() {
+            seconds++;
+            document.getElementById('time-counter').textContent = `${seconds} secondes`;
+        }, 1000);
+    </script>
+</body>
+</html>

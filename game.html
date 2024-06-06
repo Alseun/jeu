@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jeu de Clic sur Carré Noir</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            background-color: #282c34;
+            color: #ffffff;
+        }
+        #game-area {
+            position: relative;
+            width: 80%;
+            height: 60vh;
+            border: 2px solid #7c469e;
+            background-color: #323232;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        #black-square {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background-color: #5250c8;
+            cursor: pointer;
+            transition: width 0.2s, height 0.2s;
+        }
+        #score, #timer {
+            margin: 10px;
+            font-size: 24px;
+        }
+        #game-over {
+            display: none;
+            font-size: 32px;
+            color: red;
+            margin-top: 20px;
+        }
+        #replay-button {
+            display: none;
+            padding: 10px 20px;
+            font-size: 18px;
+            background-color: #00ff48;
+            color: #383838;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background-color 0.3s;
+        }
+        #replay-button:hover {
+            background-color: #27f802;
+        }
+    </style>
+</head>
+<body>
+    <div id="score">Score: 0</div>
+    <div id="timer">Temps restant: 5s</div>
+    <div id="game-area">
+        <div id="black-square"></div>
+    </div>
+    <div id="game-over">Jeu Terminé !</div>
+    <button id="replay-button">Rejouer</button>
+    <script src="games.js"></script>
+</body>
+</html>

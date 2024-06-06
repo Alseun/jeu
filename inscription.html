@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inscription</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="index.html">Accueil</a></li>
+                <li><a href="inscription.html">Inscription</a></li>
+                <li><a href="connexion.html">Connexion</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section id="inscription">
+            <h2>Inscription</h2>
+            <form id="registerForm">
+                <label for="email">Adresse e-mail:</label>
+                <input type="email" id="email" name="email" required>
+                <label for="username">Nom d'utilisateur:</label>
+                <input type="text" id="username" name="username" required>
+                <label for="password">Mot de passe:</label>
+                <input type="password" id="password" name="password" required>
+                <button type="submit">S'inscrire</button>
+            </form>
+        </section>
+    </main>
+
+    <script>
+        document.getElementById('registerForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const email = document.getElementById('email').value;
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            localStorage.setItem('email', email);
+            localStorage.setItem('username', username);
+            localStorage.setItem('password', password);
+            alert('Inscription réussie !');
+            window.location.href = 'connexion.html';
+        });
+    </script>
+</body>
+</html>

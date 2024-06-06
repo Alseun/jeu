@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accueil</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+<nav>
+    <ul>
+        <li><a href="index.html">Accueil</a></li>
+        <li><a href="inscription.html">Inscription</a></li>
+        <li><a href="connexion.html">Connexion</a></li>
+        <li><a href="information.html">Information</a></li>
+        <li><a href="snake_game.html">Jeu Snake</a></li> <!-- Ajout du lien vers la page du jeu -->
+        <li><a href="game.html">Clicker</a></li> <!-- Ajout du lien vers la page du jeu -->
+        <li><a href="jeu.html">Devine le Nombre</a></li>
+        <li><a href="tic.html">Morpion</a></li>
+        <li><a href="A.html">Pendu</a></li>
+    </ul>
+</nav>
+
+    </header>
+    <main>
+        <section id="accueil">
+            <h1>Bienvenue sur notre site</h1>
+            <p>Ce site vous permet de vous inscrire, de vous connecter et d'accéder à votre espace utilisateur.</p>
+            <div id="carre-noir"></div>
+        </section>
+    </main>
+
+    <script>
+        document.getElementById('carre-noir').addEventListener('click', function() {
+            window.location.href = 'https://cdn.pixabay.com/photo/2017/09/01/00/15/png-2702691_640.png';
+        });
+    </script>
+</body>
+</html>

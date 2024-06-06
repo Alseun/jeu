@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accueil</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="index.html">Accueil</a></li>
+                <li><a href="inscription.html">Inscription</a></li>
+                <li><a href="connexion.html">Connexion</a></li>
+                <li><a href="information.html">Information</a></li>
+                <li><a href="#" id="snake-link">Jeu Snake</a></li> <!-- Modifier l'ID du lien -->
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section id="accueil">
+            <h1>Bienvenue sur notre site</h1>
+            <p>Ce site vous permet de vous inscrire, de vous connecter et d'accéder à votre espace utilisateur.</p>
+            <div id="carre-noir"></div>
+        </section>
+    </main>
+
+    <script>
+        // Ajouter un gestionnaire d'événements au lien Snake Jeu
+        document.getElementById('snake-link').addEventListener('click', function(event) {
+            event.preventDefault(); // Empêche le lien de suivre son URL
+            loadSnakeGame(); // Charge le jeu Snake
+        });
+
+        // Fonction pour charger le jeu Snake
+        function loadSnakeGame() {
+            // Charger le contenu de snake_game.html dans le corps de la page actuelle
+            fetch('snake_game.html')
+                .then(response => response.text())
+                .then(html => {
+                    document.body.innerHTML = html; // Remplacer le contenu de la page par le jeu Snake
+                })
+                .catch(error => console.error('Une erreur s\'est produite lors du chargement du jeu Snake :', error));
+        }
+    </script>
+</body>
+</html>
